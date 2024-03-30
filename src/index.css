@@ -9,3 +9,6 @@ html,body, #st-full-pg {
   width: 100%;
   height: 100%;
 }
+.Toastify .Toastify__toast-container {
+	z-index: 9999; /* Higher than most elements */
+}

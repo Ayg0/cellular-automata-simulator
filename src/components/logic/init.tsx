@@ -1,4 +1,6 @@
+import { Id, toast } from "react-toastify";
 import { boardState, simulationLoop } from "./simLoop";
+import { useRef } from "react";
 
 type _Board = boolean[][];
 
@@ -57,19 +59,29 @@ function settingsInit(){
 	settings.timeToWait = 500;
 }
 
+function showTostify(msg:string){
+	let id:Id = 1;
+	const existingToast = toast.isActive(id);
+
+	if (!existingToast)
+		toast(msg, {toastId:id});
+	else
+		toast.update(id, {render: msg});
+}
+
 function handleCLick(e:MouseEvent){
 	e.stopPropagation();
 	e.preventDefault();
 	if (!settings.poused || !mouseDown)
 		return ;
-
-	const rect = SimAttr.canva.getBoundingClientRect();
-	let x = e.clientX - rect.left;
-	let y = e.clientY - rect.top;
-	console.log(`Click at X: ${x}, Y: ${y}`);
+	
+	let x = e.clientX - SimAttr.canva.offsetLeft;
+	let y = e.clientY - SimAttr.canva.offsetTop;
+	
 	x = Math.floor(x / SimAttr.cellSize);
 	y = Math.floor(y / SimAttr.cellSize);
-	if (x >= 0 && x < SimAttr.maxCols && y >= 0 && y < SimAttr.maxRows){
+	if (x >= 0 && x < SimAttr.maxCols && 
+		  y >= 0 && y < SimAttr.maxRows) {
 		SimAttr.board[y][x] = valToUse;
 		boardState.needToRefresh = true;
 	}
@@ -78,8 +90,16 @@ function handleCLick(e:MouseEvent){
 function handlekeyPress(e:KeyboardEvent){
 	e.stopPropagation();
 	e.preventDefault();
-	if (e.key == ' ')
+	if (e.key == ' '){
 		settings.poused = !settings.poused, boardState.needToRefresh = true;
+		showTostify(settings.poused ? "POUSED" : "RUNNING");
+	}
+	else if (e.key == '+' || e.key == '-'){
+		e.key == '+' ? settings.speed += 0.5 : e.key == '-' ? settings.speed -= 0.5 : settings.speed;
+		settings.speed = settings.speed > 10 ? 10 : settings.speed < 0.5 ? 0.5 : settings.speed;
+		settings.timeToWait = 1000 / settings.speed;
+		showTostify("SPEED: " + settings.speed);
+	}
 }
 
 export	function initCanvas(canva: HTMLCanvasElement, ctx:CanvasRenderingContext2D){
