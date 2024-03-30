@@ -60,7 +60,7 @@ function settingsInit(){
 }
 
 function showTostify(msg:string){
-	let id:Id = 1;
+	let id:Id = -1;
 	const existingToast = toast.isActive(id);
 
 	if (!existingToast)
