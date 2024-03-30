@@ -1,0 +1,11 @@
+html,body, #st-full-pg {
+	height: 100%;
+	margin: 0;
+	overflow: hidden;
+
+ }
+
+.MainContainer {
+  width: 100%;
+  height: 100%;
+}
