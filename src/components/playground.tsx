@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 import { initCanvas } from "./logic/init";
-import { ToastContainer } from "react-toastify";
 
 function Playground() {
 	const CanvaRef = useRef<HTMLCanvasElement | null>(null);

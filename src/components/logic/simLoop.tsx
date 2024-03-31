@@ -9,7 +9,7 @@ export const boardState: _boardState = {
 	lastUpdate:0,
 };
 
-function updateBoard(){
+export function updateBoard(){
 	const now = performance.now();
 	if (now - boardState.lastUpdate >= settings.timeToWait){
 		console.log('updated');

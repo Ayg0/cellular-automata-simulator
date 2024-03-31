@@ -1,6 +1,6 @@
 import { Id, toast } from "react-toastify";
-import { boardState, simulationLoop } from "./simLoop";
-import { useRef } from "react";
+import { boardState, simulationLoop, updateBoard } from "./simLoop";
+import { openSettings } from "../settingsDialog";
 
 type _Board = boolean[][];
 
@@ -100,6 +100,10 @@ function handlekeyPress(e:KeyboardEvent){
 		settings.timeToWait = 1000 / settings.speed;
 		showTostify("SPEED: " + settings.speed);
 	}
+	else if ((e.key == 'n' || e.key == 'N') && settings.poused)
+		updateBoard();
+	else if (e.key == 's' || e.key == 'S')
+		openSettings();
 }
 
 export	function initCanvas(canva: HTMLCanvasElement, ctx:CanvasRenderingContext2D){
