@@ -88,8 +88,8 @@ function handleCLick(e:MouseEvent){
 }
 
 function handlekeyPress(e:KeyboardEvent){
-	e.stopPropagation();
-	e.preventDefault();
+	//e.stopPropagation();
+	//e.preventDefault();
 	if (e.key == ' '){
 		settings.poused = !settings.poused, boardState.needToRefresh = true;
 		showTostify(settings.poused ? "POUSED" : "RUNNING");
@@ -112,6 +112,9 @@ export	function initCanvas(canva: HTMLCanvasElement, ctx:CanvasRenderingContext2
 
 	canva.width = window.innerWidth;
   	canva.height = window.innerHeight;
+	canva.tabIndex = 0;
+
+	canva.focus();
 	AttributesInit();
 	boardsInit();
 	settingsInit();
@@ -122,7 +125,7 @@ export	function initCanvas(canva: HTMLCanvasElement, ctx:CanvasRenderingContext2
 		valToUse = true;
 		handleCLick(e);
 	});
-	canva.addEventListener("mouseup",   (e) =>{
+	canva.addEventListener("mouseup",   () =>{
 		mouseDown = false;
 	});
 
