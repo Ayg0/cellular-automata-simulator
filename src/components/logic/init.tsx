@@ -136,4 +136,11 @@ export	function initCanvas(canva: HTMLCanvasElement, ctx:CanvasRenderingContext2
 		handleCLick(e);
 	});
 	window.addEventListener("keypress", handlekeyPress);
+	canva.addEventListener("resize", () => {
+		canva.width = window.innerWidth;
+		canva.height = window.innerHeight;
+		AttributesInit();
+		boardsInit();
+		boardState.needToRefresh = true;
+	});
 }
